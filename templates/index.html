@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Esportes cadastrados{% endblock %}
+
+{% block content %}
+<section class="card">
+    <div class="section-header">
+        <h2>Esportes cadastrados</h2>
+        <span>{{ esportes|length }} registro(s)</span>
+    </div>
+
+    {% if esportes %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Modalidade</th>
+                    <th>Categoria</th>
+                    <th>Federação</th>
+                    <th>Olímpico</th>
+                    <th>Expoente</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for esporte in esportes %}
+                <tr>
+                    <td>{{ esporte.uid }}</td>
+                    <td>{{ esporte.nome }}</td>
+                    <td>{{ esporte.modalidade }}</td>
+                    <td>{{ esporte.categoria or "-" }}</td>
+                    <td>{{ esporte.federacao or "-" }}</td>
+                    <td>{{ "Sim" if esporte.olimpico else "Não" }}</td>
+                    <td>{{ esporte.expoente or "-" }}</td>
+                    <td class="actions">
+                        <a class="btn small" href="{{ url_for('editar_esporte', uid=esporte.uid) }}">Editar</a>
+                        <form action="{{ url_for('excluir_esporte', uid=esporte.uid) }}" method="POST"
+                              onsubmit="return confirm('Deseja realmente excluir este esporte?');">
+                            <button class="btn danger small" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p class="empty">Nenhum esporte cadastrado ainda.</p>
+    {% endif %}
+</section>
+{% endblock %}

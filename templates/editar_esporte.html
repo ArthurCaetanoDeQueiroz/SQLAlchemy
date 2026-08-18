@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Editar esporte{% endblock %}
+
+{% block content %}
+<section class="card form-card">
+    <h2>Editar esporte #{{ esporte.uid }}</h2>
+
+    <form method="POST">
+        <label for="nome">Nome</label>
+        <input id="nome" name="nome" maxlength="40" value="{{ esporte.nome }}" required>
+
+        <label for="modalidade">Modalidade</label>
+        <input id="modalidade" name="modalidade" maxlength="80" value="{{ esporte.modalidade }}" required>
+
+        <label for="categoria">Categoria</label>
+        <input id="categoria" name="categoria" maxlength="40" value="{{ esporte.categoria or '' }}">
+
+        <label for="federacao">Federação</label>
+        <input id="federacao" name="federacao" maxlength="80" value="{{ esporte.federacao or '' }}">
+
+        <label for="olimpico">Olímpico</label>
+        <select id="olimpico" name="olimpico" required>
+            <option value="False" {% if not esporte.olimpico %}selected{% endif %}>Não</option>
+            <option value="True" {% if esporte.olimpico %}selected{% endif %}>Sim</option>
+        </select>
+
+        <label for="expoente">Expoente</label>
+        <input id="expoente" name="expoente" maxlength="40" value="{{ esporte.expoente or '' }}">
+
+        <div class="form-actions">
+            <a class="btn secondary" href="{{ url_for('home') }}">Cancelar</a>
+            <button class="btn" type="submit">Salvar alterações</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
